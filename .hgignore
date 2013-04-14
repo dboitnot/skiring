@@ -1,7 +1,6 @@
 syntax: glob
 .deps
 autom4te.cache
-build-aux
 Makefile
 Makefile.in
 aclocal.m4
