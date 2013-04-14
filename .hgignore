@@ -9,3 +9,5 @@ skiring.xcodeproj/project.xcworkspace/xcuserdata
 skiring.xcodeproj/xcuserdata
 stamp-h1
 testout
+*.o
+skiring
