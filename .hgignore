@@ -1,0 +1,14 @@
+syntax: glob
+.deps
+autom4te.cache
+build-aux
+Makefile
+Makefile.in
+aclocal.m4
+config.h.in
+config.log
+config.status
+skiring.xcodeproj/project.xcworkspace/xcuserdata
+skiring.xcodeproj/xcuserdata
+stamp-h1
+testout
