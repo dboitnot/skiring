@@ -3,7 +3,6 @@ syntax: glob
 autom4te.cache
 Makefile
 aclocal.m4
-config.h.in
 config.log
 config.status
 skiring.xcodeproj/project.xcworkspace/xcuserdata
