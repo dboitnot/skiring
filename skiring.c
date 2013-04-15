@@ -257,7 +257,7 @@ int cmd_help(int argc, char** argv, SkKeyRing* ring) {
 }
 
 bool loadSystemRing(SkKeyRing* ring) {
-    char* path = "testout";
+    char* path = SYSCONFDIR "/skiring/ring";
 
     FILE* fp = fopen(path, "r");
     if (fp == NULL) {
