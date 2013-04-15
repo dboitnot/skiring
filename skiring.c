@@ -46,6 +46,8 @@
 #include "coding.h"
 #include "skiring.h"
 
+#define SYSTEM_RING_PATH SYSCONFDIR "/skiring/ring"
+
 #define GET_KEY(ring, keyName, key) {key = SkKeyRing_find(ring, keyName, NULL); if (!key) { fprintf(stderr, "key not found: %s\n", keyName); return KEY_NOT_FOUND; }}
 
 #define REQUIRE_SUPERUSER() {if (strcmp(realUser,superUser)) { fprintf(stderr, "permission denied, log in as %s to do this\n", superUser); return PERMISSION_DENIED; }}
@@ -257,7 +259,7 @@ int cmd_help(int argc, char** argv, SkKeyRing* ring) {
 }
 
 bool loadSystemRing(SkKeyRing* ring) {
-    char* path = SYSCONFDIR "/skiring/ring";
+    char* path = SYSTEM_RING_PATH;
 
     FILE* fp = fopen(path, "r");
     if (fp == NULL) {
@@ -281,7 +283,7 @@ bool loadSystemRing(SkKeyRing* ring) {
 bool storeSystemRing(SkKeyRing* ring) {
     umask(S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
     
-    char* path = "testout";
+    char* path = SYSTEM_RING_PATH;
 
     FILE* fp = fopen(path, "w");
     if (fp == NULL) {        
