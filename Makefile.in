@@ -682,7 +682,11 @@ uninstall-am: uninstall-binPROGRAMS
 install-exec-hook:
 	chown skiring $(DESTDIR)$(bindir)/skiring$(EXEEXT)
 	chmod 4755 $(DESTDIR)$(bindir)/skiring$(EXEEXT)
+	mkdir -p $(sysconfdir)/skiring
+	chown skiring $(sysconfdir)/skiring
+	chmod 700 $(sysconfdir)/skiring
 	$(DESTDIR)$(bindir)/skiring$(EXEEXT) init
+	chmod 600 $(sysconfdir)/skiring/ring
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
