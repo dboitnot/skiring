@@ -8,3 +8,4 @@ EXTRA_DIST = m4/NOTES
 install-exec-hook:
 	chown skiring $(DESTDIR)$(bindir)/skiring$(EXEEXT)
 	chmod 4755 $(DESTDIR)$(bindir)/skiring$(EXEEXT)
+	$(DESTDIR)$(bindir)/skiring$(EXEEXT) init

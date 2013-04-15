@@ -214,6 +214,10 @@ int cmd_get(int argc, char** argv, SkKeyRing* ring) {
     return SUCCESS;
 }
 
+int cmd_init(int argc, char** argv, SkKeyRing* ring) {
+    // Do Nothing. Just let the keyring get created.
+}
+
 typedef struct {
     char* command;
     char* usage;
@@ -230,7 +234,8 @@ SkCommand commands[] = {
     { "revoke", "<key> <user>", "revoke <key> from <user>", true, true, &cmd_revoke },
     { "remove", "<key>", "remove <key> from keyring", true, true, &cmd_remove },
     { "put", "<key>", "set password for <key>", true, true, &cmd_put },
-    { "get", "<key>", "print password for <key>", true, false, &cmd_get }
+    { "get", "<key>", "print password for <key>", true, false, &cmd_get },
+    { "init", "", "creates the keyring if it doesn't already exist", true, true, &cmd_init }
 };
 
 int cmd_help(int argc, char** argv, SkKeyRing* ring) {    
