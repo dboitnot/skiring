@@ -207,7 +207,7 @@ int cmd_get(int argc, char** argv, SkKeyRing* ring) {
     SkKey* key; GET_KEY(ring, argv[2], key);
 
     if (strcmp(realUser, superUser) && (!SkStringSet_contains(key->users, realUser))) {
-        fprintf(stderr, "permission denied");
+        fprintf(stderr, "permission denied\n");
         return PERMISSION_DENIED;
     }
 
