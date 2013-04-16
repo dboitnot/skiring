@@ -280,8 +280,6 @@ bool loadSystemRing(SkKeyRing* ring) {
         return true;
     }
 
-    fclose(fp);
-
     return false;
 }
 
@@ -297,7 +295,6 @@ bool storeSystemRing(SkKeyRing* ring) {
     }
 
     storeRing(fp, ring);
-    fclose(fp);
 
     return false;
 }
