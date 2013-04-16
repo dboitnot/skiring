@@ -147,10 +147,11 @@ SkLoadStatus loadRing(FILE* fp, SkKeyRing* ring) {
     for (i = 0; i < count; i++) {
         SkKey* key = loadKey(fp);
         if (lastKey) {
-            lastKey->next = key;            
+            lastKey->next = key;
         } else {
             ring->head = key;
-        }
+        }        
+        lastKey = key;
     }
 
     fclose(fp);
