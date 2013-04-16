@@ -72,6 +72,7 @@ int cmd_list(int argc, char** argv, SkKeyRing* ring) {
     while (key) {
         printf("%-15s", key->name);
 
+        // Print user list
         SkStringSetItem* user = key->users->head;
         int i = 0;
         while (user) {
@@ -80,6 +81,8 @@ int cmd_list(int argc, char** argv, SkKeyRing* ring) {
             printf("%s\n", user->value);
             user = user->next;
         }
+        printf("\n");
+
         key = key->next;
     }
 
@@ -190,7 +193,7 @@ int cmd_put(int argc, char** argv, SkKeyRing* ring) {
         return USER_CANCEL;
 
     if (strcmp(pw1, pw2) != 0) {
-        fprintf(stderr, "passwords don't match");
+        fprintf(stderr, "passwords don't match\n");
         return PASSWORD_MISMATCH;
     }
 
@@ -277,6 +280,8 @@ bool loadSystemRing(SkKeyRing* ring) {
         return true;
     }
 
+    fclose(fp);
+
     return false;
 }
 
@@ -292,6 +297,8 @@ bool storeSystemRing(SkKeyRing* ring) {
     }
 
     storeRing(fp, ring);
+    fclose(fp);
+
     return false;
 }
 
