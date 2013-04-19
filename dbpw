@@ -9,6 +9,7 @@ fi
 
 if [ $# -ne 1 ]; then
   echo "usage: dbpw <username>"
+  exit 1
 fi
 
 U=`echo $1 | tr '[:lower:]' '[:upper:]'`
