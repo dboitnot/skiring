@@ -13,5 +13,7 @@ if [ $# -ne 1 ]; then
 fi
 
 U=`echo $1 | tr '[:lower:]' '[:upper:]'`
+PW=`skiring get ${ORACLE_SID}_${U}` || exit 1
 
-skiring get ${ORACLE_SID}_${U} || exit 1
+echo "${U}/${PW}"
+
