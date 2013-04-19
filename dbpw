@@ -1,0 +1,16 @@
+die () {
+  echo "Error: $@" >&2
+  exit 1
+}
+
+if [ ! $ORACLE_SID ]; then
+  die "ORACLE_SID not set"
+fi
+
+if [ $# -ne 1 ]; then
+  echo "usage: dbpw <username>"
+fi
+
+U=`echo $1 | tr '[:lower:]' '[:upper:]'`
+
+skiring get ${ORACLE_SID}_${U} || exit 1
