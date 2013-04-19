@@ -81,7 +81,8 @@ int cmd_list(int argc, char** argv, SkKeyRing* ring) {
             printf("%s\n", user->value);
             user = user->next;
         }
-        printf("\n");
+	if (i < 1)
+        	printf("\n");
 
         key = key->next;
     }
