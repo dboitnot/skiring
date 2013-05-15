@@ -205,13 +205,26 @@ int cmd_put(int argc, char** argv, SkKeyRing* ring) {
 }
 
 int cmd_get(int argc, char** argv, SkKeyRing* ring) {
-    if (argc != 3)
+    if (argc < 3)
         BAD_ARGUMENT;    
 
-    SkKey* key; GET_KEY(ring, argv[2], key);
+    SkKey* key = NULL;
+    char* keyName;
+    int i = 2;
+    for (; i < argc; i++) {
+        keyName = argv[i];
+        key = SkKeyRing_find(ring, keyName, NULL);
+        if (key)
+            break;
+    }
+
+    if (!key) {
+        fprintf(stderr, "key not found: %s\n", keyName);
+        return KEY_NOT_FOUND;
+    }
 
     if (strcmp(realUser, superUser) && (!SkStringSet_contains(key->users, realUser))) {
-        fprintf(stderr, "permission denied\n");
+        fprintf(stderr, "user '%s' is not authorized for key '%s'\n", realUser, keyName);
         return PERMISSION_DENIED;
     }
 
@@ -240,7 +253,7 @@ SkCommand commands[] = {
     { "revoke", "<key> <user>", "revoke <key> from <user>", true, true, &cmd_revoke },
     { "remove", "<key>", "remove <key> from keyring", true, true, &cmd_remove },
     { "put", "<key>", "set password for <key>", true, true, &cmd_put },
-    { "get", "<key>", "print password for <key>", true, false, &cmd_get },
+    { "get", "<key> [<key> ...]", "print password for <key>. With multiple keys, print first match.", true, false, &cmd_get },
     { "init", "", "creates the keyring if it doesn't already exist", true, true, &cmd_init }
 };
 
