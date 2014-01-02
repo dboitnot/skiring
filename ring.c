@@ -74,12 +74,14 @@ bool SkStringSet_contains(SkStringSet* set, char* str) {
     return SkStringSet_find(set, str, NULL) != NULL;
 }
 
-SkStringSet* SkStringSet_add(SkStringSet* set, char* str) {
-    if (SkStringSet_contains(set, str))
-        return;
+SkStringSetItem* SkStringSet_add(SkStringSet* set, char* str) {
+    SkStringSetItem* ret = SkStringSet_find(set, str, NULL);
+    if (ret != NULL)
+        return ret;
 
-    SkStringSetItem* newItem = SkStringSetItem_create(str, set->head);
-    set->head = newItem;
+    ret = SkStringSetItem_create(str, set->head);
+    set->head = ret;
+    return ret;
 }
 
 void SkStringSet_remove(SkStringSet* set, char* str) {

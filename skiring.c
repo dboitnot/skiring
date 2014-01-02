@@ -63,7 +63,7 @@ int cmd_list(int argc, char** argv, SkKeyRing* ring) {
 
     if (!key) {
         printf("No keys defined.\n");
-        return;
+        return SUCCESS;
     }
 
     printf("Keys           Authorized Users\n");
@@ -103,7 +103,7 @@ int cmd_grant(int argc, char** argv, SkKeyRing* ring) {
     SkKey* key; GET_KEY(ring, keyName, key);
     
     if (strlen(userName) > SK_MAX_STRING_SIZE) {
-        fprintf(stderr, "username too long\n", userName);
+        fprintf(stderr, "username too long: %s\n", userName);
         return STRING_TOO_LONG;
     }
 
@@ -235,6 +235,7 @@ int cmd_get(int argc, char** argv, SkKeyRing* ring) {
 
 int cmd_init(int argc, char** argv, SkKeyRing* ring) {
     // Do Nothing. Just let the keyring get created.
+    return SUCCESS;
 }
 
 typedef struct {
@@ -273,6 +274,8 @@ int cmd_help(int argc, char** argv, SkKeyRing* ring) {
         SkCommand cmd = commands[i];
         fprintf(stderr, "  %-7s %s\n", cmd.command, cmd.shortHelp);
     }
+
+    return SUCCESS;
 }
 
 bool loadSystemRing(SkKeyRing* ring) {
@@ -316,7 +319,6 @@ bool storeSystemRing(SkKeyRing* ring) {
 int main(int argc, char** argv) {
     if (argc < 2) {
         cmd_help(argc, argv, NULL);
-        printf("%s", SYSCONFDIR);
         return BAD_ARGUMENT;
     }
 

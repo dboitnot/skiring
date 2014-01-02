@@ -59,14 +59,16 @@ typedef struct _SkKeyRing {
 
 SkStringSet* SkStringSet_create();
 int SkStringSet_count(SkStringSet* set);
-SkStringSet* SkStringSet_add(SkStringSet* set, char* str);
+SkStringSetItem* SkStringSet_add(SkStringSet* set, char* str);
 bool SkStringSet_contains(SkStringSet* set, char* str);
+void SkStringSet_remove(SkStringSet* set, char* str);
 
 SkKey* SkKey_create(char* name, char* value, SkKey* next);
 
 SkKeyRing* SkKeyRing_create();
 SkKey* SkKeyRing_find(SkKeyRing* ring, char* name, SkKey** prev);
 SkKey* SkKeyRing_put(SkKeyRing* ring, char* name, char* value);
+void SkKeyRing_remove(SkKeyRing* ring, char* name);
 int SkKeyRing_count(SkKeyRing* ring);
 
 #endif
