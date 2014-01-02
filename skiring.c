@@ -181,7 +181,7 @@ bool readPassword(char* prompt, char** password) {
 
 int cmd_put(int argc, char** argv, SkKeyRing* ring) {
     if (argc != 3)
-        BAD_ARGUMENT;
+        return BAD_ARGUMENT;
 
     REQUIRE_SUPERUSER();
 
@@ -306,8 +306,9 @@ bool storeSystemRing(SkKeyRing* ring) {
     char* path = SYSTEM_RING_PATH;
 
     FILE* fp = fopen(path, "w");
-    if (fp == NULL) {        
+    if (fp == NULL) {
         perror("error writing key ring");
+        printf("   %s\n", path);
         return true;
     }
 

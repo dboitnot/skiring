@@ -135,7 +135,7 @@ SkKey* SkKeyRing_find(SkKeyRing* ring, char* name, SkKey** prev) {
         *prev = NULL;
 
     while (ret) {
-        if (strcmp(ret->name, name) == 0)
+        if (strcasecmp(ret->name, name) == 0)
             return ret;
         if (prev)
             *prev = ret;
