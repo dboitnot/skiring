@@ -91,6 +91,21 @@ int cmd_list(int argc, char** argv, SkKeyRing* ring) {
     return SUCCESS;
 }
 
+int cmd_list_keys(int argc, char** argv, SkKeyRing* ring) {
+    SkKey* key = ring->head;
+
+    if (!key) {
+        return SUCCESS;
+    }
+
+    while (key) {
+        printf("%s\n", key->name);
+        key = key->next;
+    }
+
+    return SUCCESS;
+}
+
 int cmd_grant(int argc, char** argv, SkKeyRing* ring) {
     if (argc != 4)
         return BAD_ARGUMENT;
@@ -250,6 +265,7 @@ typedef struct {
 SkCommand commands[] = {
     { "help", "", "print this information", false, false, &cmd_help },
     { "list", "", "list all keys and authorized users", true, false, &cmd_list },
+    { "list-keys", "", "lists all keys", true, false, &cmd_list_keys },
     { "grant", "<key> <user>", "grant <key> to <user>", true, true, &cmd_grant },
     { "revoke", "<key> <user>", "revoke <key> from <user>", true, true, &cmd_revoke },
     { "remove", "<key>", "remove <key> from keyring", true, true, &cmd_remove },
@@ -272,7 +288,7 @@ int cmd_help(int argc, char** argv, SkKeyRing* ring) {
     fprintf(stderr, "\nCommand Information:\n");
     for (i = 0; i < sizeof(commands)/sizeof(SkCommand); i++) {
         SkCommand cmd = commands[i];
-        fprintf(stderr, "  %-7s %s\n", cmd.command, cmd.shortHelp);
+        fprintf(stderr, "  %-12s %s\n", cmd.command, cmd.shortHelp);
     }
 
     return SUCCESS;
