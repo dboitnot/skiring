@@ -94,10 +94,6 @@ int cmd_list(int argc, char** argv, SkKeyRing* ring) {
 int cmd_list_keys(int argc, char** argv, SkKeyRing* ring) {
     SkKey* key = ring->head;
 
-    if (!key) {
-        return SUCCESS;
-    }
-
     while (key) {
         printf("%s\n", key->name);
         key = key->next;
