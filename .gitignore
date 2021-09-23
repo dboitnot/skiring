@@ -1,0 +1,11 @@
+/.deps/
+/Makefile
+*.o
+/config.h
+*.log
+/config.status
+*~
+/skiring
+/stamp-h1
+/autom4te.cache/
+/aclocal.m4
