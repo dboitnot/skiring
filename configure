@@ -617,6 +617,8 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+SKIRING_USER_EMPTY_FALSE
+SKIRING_USER_EMPTY_TRUE
 skiring_user
 am__fastdepCC_FALSE
 am__fastdepCC_TRUE
@@ -717,7 +719,8 @@ CC
 CFLAGS
 LDFLAGS
 LIBS
-CPPFLAGS'
+CPPFLAGS
+skiring_user'
 
 
 # Initialize some variables set by options.
@@ -1356,6 +1359,8 @@ Some influential environment variables:
   LIBS        libraries to pass to the linker, e.g. -l<library>
   CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
               you have headers in a nonstandard directory <include dir>
+  skiring_user
+              The skiring "super-user" which owns the skiring database.
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -4120,7 +4125,14 @@ else
 fi
 
 
-skiring_user=skiring
+
+ if test -z "$skiring_user"; then
+  SKIRING_USER_EMPTY_TRUE=
+  SKIRING_USER_EMPTY_FALSE='#'
+else
+  SKIRING_USER_EMPTY_TRUE='#'
+  SKIRING_USER_EMPTY_FALSE=
+fi
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4253,6 +4265,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
   as_fn_error $? "conditional \"am__fastdepCC\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${SKIRING_USER_EMPTY_TRUE}" && test -z "${SKIRING_USER_EMPTY_FALSE}"; then
+  as_fn_error $? "conditional \"SKIRING_USER_EMPTY\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 
@@ -5573,6 +5589,5 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
 printf "%s\n" "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
-
 
 

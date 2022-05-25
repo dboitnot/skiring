@@ -7,6 +7,6 @@ AM_INIT_AUTOMAKE
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_MACRO_DIR([m4])
 AC_PROG_CC
-AC_SUBST([skiring_user],[skiring])
+AC_ARG_VAR([skiring_user],[The skiring "super-user" which owns the skiring database.])
+AM_CONDITIONAL([SKIRING_USER_EMPTY], [test -z "$skiring_user"])
 AC_OUTPUT
-
