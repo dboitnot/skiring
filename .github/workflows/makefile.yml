@@ -14,5 +14,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: configure
+      run: ./configure
+
     - name: Run distcheck
       run: make distcheck
