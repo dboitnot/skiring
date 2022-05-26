@@ -38,6 +38,12 @@ jobs:
       - name: Check for error with version
         run: "[ -z '${{ steps.version.v }}' ] && exit 1"
 
+      - name: Generate configure script
+        run: autoconf
+
+      - name: Generate Makefile.in
+        run: automake
+
       - name: configure
         run: ./configure
 
