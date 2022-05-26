@@ -1,4 +1,4 @@
-AC_INIT([skiring], [0.1])
+AC_INIT([skiring], [SNAPSHOT])
 AC_PREREQ([2.68])
 AC_CONFIG_SRCDIR([skiring.c])
 AC_CONFIG_HEADERS([config.h])
