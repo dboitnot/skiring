@@ -35,6 +35,9 @@ jobs:
         id: version
         run: echo "::set-output name=v::$(./set_version.sh $GITHUB_REF)"
 
+      - name: Check for error with version
+        run: "[ -z '${{ steps.version.v }}' ] && exit 1"
+
       - name: configure
         run: ./configure
 
