@@ -33,7 +33,7 @@ jobs:
 
       - name: Get build version
         id: version
-        run: echo "::set-output name=v::$(./set_version $GITHUB_REF)"
+        run: echo "::set-output name=v::$(./set_version.sh $GITHUB_REF)"
 
       - name: configure
         run: ./configure
