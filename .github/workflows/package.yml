@@ -8,14 +8,44 @@ on:
       - develop
 
 jobs:
-  build:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: configure
+        run: ./configure
+
+      - name: Run distcheck
+        run: make distcheck
+
+  package:
+    needs: check
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        platform:
+          - redhat
+
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: configure
-      run: ./configure
+      - name: Get build version
+        id: version
+        run: echo "::set-output name=v::$(./set_version $GITHUB_REF)"
 
-    - name: Run distcheck
-      run: make distcheck
+      - name: configure
+        run: ./configure
+
+      - name: Remove prior builds
+        run: rm -Rf dist skiring-*.tar.gz
+
+      - name: Build source tarball
+        run: make dist
+
+      - name: Build packages
+        run: ./package.sh ${{ matrix.platform }} ${{ version }} 1
+
+      - name: Check packages
+        run: ls -lh dist
