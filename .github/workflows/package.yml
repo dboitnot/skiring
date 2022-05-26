@@ -45,7 +45,7 @@ jobs:
         run: make dist
 
       - name: Build packages
-        run: ./package.sh ${{ matrix.platform }} ${{ version }} 1
+        run: ./package.sh ${{ matrix.platform }} ${{ steps.version.v }} 1
 
       - name: Check packages
         run: ls -lh dist
