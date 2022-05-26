@@ -36,7 +36,7 @@ jobs:
         run: echo "::set-output name=v::$(./set_version.sh $GITHUB_REF)"
 
       - name: Check for error with version
-        run: "[ -z '${{ steps.version.v }}' ] && exit 1"
+        run: "[ -z '${{ steps.version.outputs.v }}' ] && exit 1"
 
       - name: Generate configure script
         run: autoconf
@@ -54,7 +54,7 @@ jobs:
         run: make dist
 
       - name: Build packages
-        run: ./package.sh ${{ matrix.platform }} ${{ steps.version.v }} 1
+        run: ./package.sh ${{ matrix.platform }} ${{ steps.version.outputs.v }} 1
 
       - name: Check packages
         run: ls -lh dist
