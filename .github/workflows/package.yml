@@ -22,6 +22,8 @@ jobs:
   tarball:
     needs: check
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.v }}
     steps:
       - uses: actions/checkout@v2
 
@@ -66,7 +68,7 @@ jobs:
           name: tarball
 
       - name: Build packages
-        run: ./package.sh ${{ matrix.platform }} ${{ needs.tarball.steps.version.outputs.v }} 1
+        run: ./package.sh ${{ matrix.platform }} ${{ needs.tarball.outputs.version }} 1
 
       - name: Check packages
         run: ls -lh dist
