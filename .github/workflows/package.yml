@@ -7,6 +7,8 @@ on:
     branches:
       - main
       - develop
+    tags:
+      - v0.*
 
 jobs:
   check:
