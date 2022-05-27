@@ -80,3 +80,17 @@ jobs:
         with:
           name: pkg-${{ matrix.platform }}
           path: dist/
+
+  release:
+    needs:
+      - package
+      - tarball
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          path: dist
+
+      - name: List artifacts
+        run: find dist -type f
