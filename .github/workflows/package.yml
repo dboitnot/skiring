@@ -85,7 +85,7 @@ jobs:
     needs:
       - package
       - tarball
-    if: needs.tarball.outputs.version != 'SNAPSHOT'
+    # if: needs.tarball.outputs.version != 'SNAPSHOT'
     runs-on: ubuntu-latest
 
     steps:
@@ -95,3 +95,13 @@ jobs:
 
       - name: List artifacts
         run: find dist -type f
+
+      - name: Consolidate artifacts
+        run: mkdir -p release && find dist -type f -exec mv '{}' release/ ';'
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ needs.tarball.outputs.version }}
+          fail_on_unmatched_files: true
+          files: release/*
