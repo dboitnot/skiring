@@ -1,16 +1,26 @@
 ACLOCAL_AMFLAGS = -I m4 --install
 AM_CPPFLAGS = -DSYSCONFDIR='"$(sysconfdir)"'
+AM_DISTCHECK_CONFIGURE_FLAGS = skiring_user=$(USER)
 
 bin_PROGRAMS = skiring
 bin_SCRIPTS = dbpw
-skiring_SOURCES = ring.c ring.h coding.c coding.h skiring.c
+skiring_SOURCES = ring.c ring.h coding.c coding.h skiring.c skiring.h dbpw
 EXTRA_DIST = m4/NOTES
 
+if SKIRING_USER_EMPTY
+SKIRING_USER = skiring
+else
+SKIRING_USER = @skiring_user@
+endif
+
 install-exec-hook:
-	chown skiring $(DESTDIR)$(bindir)/skiring$(EXEEXT)
+	chown $(SKIRING_USER) $(DESTDIR)$(bindir)/skiring$(EXEEXT)
 	chmod 4755 $(DESTDIR)$(bindir)/skiring$(EXEEXT)
 	mkdir -p $(sysconfdir)/skiring
-	chown skiring $(sysconfdir)/skiring
+	chown $(SKIRING_USER) $(sysconfdir)/skiring
 	chmod 700 $(sysconfdir)/skiring
 	$(DESTDIR)$(bindir)/skiring$(EXEEXT) init
 	chmod 600 $(sysconfdir)/skiring/ring
+
+uninstall-hook:
+	rm -f $(sysconfdir)/skiring/ring
