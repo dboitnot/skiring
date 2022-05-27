@@ -37,6 +37,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <termios.h>
@@ -72,6 +73,16 @@ char *superUser;
 // Forward declaration because help must be defined after commands.
 int cmd_help(int argc, char **argv, SkKeyRing *ring);
 
+unsigned long max_key_len(SkKeyRing *ring) {
+  SkKey *key = ring->head;
+  unsigned long ret = 0;
+  while (key) {
+    ret = MAX(ret, strlen(key->name));
+    key = key->next;
+  }
+  return ret;
+}
+
 int cmd_list(int argc, char **argv, SkKeyRing *ring) {
   SkKey *key = ring->head;
 
@@ -80,18 +91,22 @@ int cmd_list(int argc, char **argv, SkKeyRing *ring) {
     return SUCCESS;
   }
 
-  printf("Keys           Authorized Users\n");
-  printf("-------------- ----------------\n");
+  int keyWidth = MIN(40, MAX(4, max_key_len(ring)));
+
+  printf("%-*s Authorized Users\n", keyWidth, "Keys");
+  for (int i = 0; i < keyWidth; i++)
+    putchar('-');
+  printf(" ----------------\n");
 
   while (key) {
-    printf("%-15s", key->name);
+    printf("%-*s", keyWidth + 1, key->name);
 
     // Print user list
     SkStringSetItem *user = key->users->head;
     int i = 0;
     while (user) {
       if (i++)
-        printf("%-15s", "");
+        printf("%-*s", keyWidth + 1, "");
       printf("%s\n", user->value);
       user = user->next;
     }
