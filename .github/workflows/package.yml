@@ -85,7 +85,7 @@ jobs:
     needs:
       - package
       - tarball
-    # if: needs.tarball.outputs.version != 'SNAPSHOT'
+    if: needs.tarball.outputs.version != 'SNAPSHOT'
     runs-on: ubuntu-latest
 
     steps:
