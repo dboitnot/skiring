@@ -19,11 +19,17 @@ release=$1; shift
 [ -z "$release" ] && usage
 [ -d "pkg/$platform" ] || die "Platform not found: $platform"
 
-tag=skiring-pkg:$platform
+tag=skiring-pkg:${platform}-build
 
 OUT_DIR=$(pwd)/dist
 mkdir -p $OUT_DIR || die "Error creating $OUT_DIR"
 
-docker build -f pkg/$platform/Dockerfile -t $tag . || die "Error building image"
+docker build -f pkg/$platform/build/Dockerfile -t $tag . || die "Error building build image"
+docker run -t --rm -e VERSION=$version -e RELEASE=$release \
+    --mount type=bind,source="$OUT_DIR",target=/out $tag || die "Error building packages"
+
+tag=skiring-pkg:${platform}-test
+
+docker build -f pkg/$platform/test/Dockerfile -t $tag . || die "Error building test image"
 docker run -t --rm -e VERSION=$version -e RELEASE=$release \
     --mount type=bind,source="$OUT_DIR",target=/out $tag || die "Error building packages"

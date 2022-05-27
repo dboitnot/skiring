@@ -19,15 +19,9 @@ jobs:
       - name: Run distcheck
         run: make distcheck
 
-  package:
+  tarball:
     needs: check
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        platform:
-          - redhat
-
     steps:
       - uses: actions/checkout@v2
 
@@ -44,14 +38,40 @@ jobs:
       - name: configure
         run: ./configure
 
-      - name: Remove prior builds
-        run: rm -Rf dist skiring-*.tar.gz
-
       - name: Build source tarball
         run: make dist
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tarball
+          path: skiring-${{ steps.version.outputs.v }}.tar.gz
+
+  package:
+    needs: tarball
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        platform:
+          - redhat
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Remove prior builds
+        run: rm -Rf dist
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: tarball
 
       - name: Build packages
         run: ./package.sh ${{ matrix.platform }} ${{ steps.version.outputs.v }} 1
 
       - name: Check packages
         run: ls -lh dist
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: pkg-${{ matrix.platform }}
+          path: dist/
