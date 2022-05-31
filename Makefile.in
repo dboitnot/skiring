@@ -306,7 +306,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4 --install
-AM_CPPFLAGS = -DSYSCONFDIR='"$(sysconfdir)"'
+AM_CPPFLAGS = -DSYSCONFDIR='"$(sysconfdir)"' -std=gnu11
 AM_DISTCHECK_CONFIGURE_FLAGS = skiring_user=$(USER)
 bin_SCRIPTS = dbpw
 skiring_SOURCES = ring.c ring.h coding.c coding.h skiring.c skiring.h dbpw

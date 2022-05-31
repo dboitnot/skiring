@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4 --install
-AM_CPPFLAGS = -DSYSCONFDIR='"$(sysconfdir)"'
+AM_CPPFLAGS = -DSYSCONFDIR='"$(sysconfdir)"' -std=gnu11
 AM_DISTCHECK_CONFIGURE_FLAGS = skiring_user=$(USER)
 
 bin_PROGRAMS = skiring
