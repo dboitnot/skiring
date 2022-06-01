@@ -617,6 +617,8 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+ENABLE_INSTALL_HOOK_FALSE
+ENABLE_INSTALL_HOOK_TRUE
 SKIRING_USER_EMPTY_FALSE
 SKIRING_USER_EMPTY_TRUE
 skiring_user
@@ -711,6 +713,7 @@ ac_user_opts='
 enable_option_checking
 enable_silent_rules
 enable_dependency_tracking
+enable_install_hook
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1350,6 +1353,8 @@ Optional Features:
                           do not reject slow dependency extractors
   --disable-dependency-tracking
                           speeds up one-time build
+  --enable-install-hook   Enable permission changes and ring init on make
+                          install. [default=yes]
 
 Some influential environment variables:
   CC          C compiler command
@@ -4134,6 +4139,28 @@ else
   SKIRING_USER_EMPTY_FALSE=
 fi
 
+# Check whether --enable-install-hook was given.
+if test ${enable_install_hook+y}
+then :
+  enableval=$enable_install_hook; case ${enableval} in #(
+  yes) :
+     ;; #(
+  no) :
+     ;; #(
+  *) :
+    as_fn_error $? "bad value ${enableval} for --enable-install-hook" "$LINENO" 5 ;;
+esac
+
+fi
+
+ if test x$enable_install_hook != xno; then
+  ENABLE_INSTALL_HOOK_TRUE=
+  ENABLE_INSTALL_HOOK_FALSE='#'
+else
+  ENABLE_INSTALL_HOOK_TRUE='#'
+  ENABLE_INSTALL_HOOK_FALSE=
+fi
+
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -4269,6 +4296,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${SKIRING_USER_EMPTY_TRUE}" && test -z "${SKIRING_USER_EMPTY_FALSE}"; then
   as_fn_error $? "conditional \"SKIRING_USER_EMPTY\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${ENABLE_INSTALL_HOOK_TRUE}" && test -z "${ENABLE_INSTALL_HOOK_FALSE}"; then
+  as_fn_error $? "conditional \"ENABLE_INSTALL_HOOK\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 

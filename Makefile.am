@@ -13,6 +13,7 @@ else
 SKIRING_USER = @skiring_user@
 endif
 
+if ENABLE_INSTALL_HOOK
 install-exec-hook:
 	chown $(SKIRING_USER) $(DESTDIR)$(bindir)/skiring$(EXEEXT)
 	chmod 4755 $(DESTDIR)$(bindir)/skiring$(EXEEXT)
@@ -22,6 +23,7 @@ install-exec-hook:
 	$(DESTDIR)$(bindir)/skiring$(EXEEXT) init
 	[ -f $(sysconfdir)/skiring/ring ] || /usr/bin/skiring init
 	chmod 600 $(sysconfdir)/skiring/ring
+endif
 
 uninstall-hook:
 	rm -f $(sysconfdir)/skiring/ring

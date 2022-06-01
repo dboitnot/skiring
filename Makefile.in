@@ -745,6 +745,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+@ENABLE_INSTALL_HOOK_FALSE@install-exec-hook:
 clean: clean-am
 
 clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
@@ -846,14 +847,15 @@ uninstall-am: uninstall-binPROGRAMS uninstall-binSCRIPTS
 .PRECIOUS: Makefile
 
 
-install-exec-hook:
-	chown $(SKIRING_USER) $(DESTDIR)$(bindir)/skiring$(EXEEXT)
-	chmod 4755 $(DESTDIR)$(bindir)/skiring$(EXEEXT)
-	mkdir -p $(sysconfdir)/skiring
-	chown $(SKIRING_USER) $(sysconfdir)/skiring
-	chmod 700 $(sysconfdir)/skiring
-	$(DESTDIR)$(bindir)/skiring$(EXEEXT) init
-	chmod 600 $(sysconfdir)/skiring/ring
+@ENABLE_INSTALL_HOOK_TRUE@install-exec-hook:
+@ENABLE_INSTALL_HOOK_TRUE@	chown $(SKIRING_USER) $(DESTDIR)$(bindir)/skiring$(EXEEXT)
+@ENABLE_INSTALL_HOOK_TRUE@	chmod 4755 $(DESTDIR)$(bindir)/skiring$(EXEEXT)
+@ENABLE_INSTALL_HOOK_TRUE@	mkdir -p $(sysconfdir)/skiring
+@ENABLE_INSTALL_HOOK_TRUE@	chown $(SKIRING_USER) $(sysconfdir)/skiring
+@ENABLE_INSTALL_HOOK_TRUE@	chmod 700 $(sysconfdir)/skiring
+@ENABLE_INSTALL_HOOK_TRUE@	$(DESTDIR)$(bindir)/skiring$(EXEEXT) init
+@ENABLE_INSTALL_HOOK_TRUE@	[ -f $(sysconfdir)/skiring/ring ] || /usr/bin/skiring init
+@ENABLE_INSTALL_HOOK_TRUE@	chmod 600 $(sysconfdir)/skiring/ring
 
 uninstall-hook:
 	rm -f $(sysconfdir)/skiring/ring
