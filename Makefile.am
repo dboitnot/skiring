@@ -20,6 +20,7 @@ install-exec-hook:
 	chown $(SKIRING_USER) $(sysconfdir)/skiring
 	chmod 700 $(sysconfdir)/skiring
 	$(DESTDIR)$(bindir)/skiring$(EXEEXT) init
+	[ -f $(sysconfdir)/skiring/ring ] || /usr/bin/skiring init
 	chmod 600 $(sysconfdir)/skiring/ring
 
 uninstall-hook:
