@@ -59,6 +59,7 @@ jobs:
       matrix:
         platform:
           - redhat
+          - debian
 
     steps:
       - uses: actions/checkout@v2
