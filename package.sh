@@ -21,15 +21,21 @@ release=$1; shift
 
 tag=skiring-pkg:${platform}-build
 
+if [ "$version" == "SNAPSHOT" ]; then
+    nversion="0.0.0-SNAPSHOT"
+else
+    nversion="$version"
+fi
+
 OUT_DIR=$(pwd)/dist
 mkdir -p $OUT_DIR || die "Error creating $OUT_DIR"
 
 docker build -f pkg/$platform/build/Dockerfile -t $tag . || die "Error building build image"
-docker run -t --rm -e VERSION=$version -e RELEASE=$release \
+docker run -t --rm -e VERSION=$version -e RELEASE=$release -e NVERSION=$nversion \
     --mount type=bind,source="$OUT_DIR",target=/out $tag || die "Error building packages"
 
 tag=skiring-pkg:${platform}-test
 
 docker build -f pkg/$platform/test/Dockerfile -t $tag . || die "Error building test image"
-docker run -t --rm -e VERSION=$version -e RELEASE=$release \
+docker run -t --rm -e VERSION=$version -e RELEASE=$release -e NVERSION=$nversion \
     --mount type=bind,source="$OUT_DIR",target=/out $tag || die "Error building packages"
