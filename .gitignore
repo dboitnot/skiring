@@ -12,3 +12,4 @@
 skiring-*.tar.gz
 /dist/
 /configure.ace
+/local/
