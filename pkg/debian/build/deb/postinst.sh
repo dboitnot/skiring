@@ -1,4 +1,4 @@
-useradd -M -s /bin/bash skiring || echo "skiring user already exists"
+useradd -M -r -s /bin/bash skiring || echo "skiring user already exists"
 chown skiring /usr/local/bin/skiring
 chmod 4755 /usr/local/bin/skiring
 mkdir -p /etc/skiring
