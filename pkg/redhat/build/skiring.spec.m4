@@ -31,7 +31,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/skiring
 
 %post
-useradd -M -s /bin/bash skiring || echo "skiring user already exists"
+useradd -M -r -s /bin/bash skiring || echo "skiring user already exists"
 chown skiring /usr/bin/skiring
 chmod 4755 /usr/bin/skiring
 mkdir -p /etc/skiring
